@@ -1,8 +1,9 @@
 var express = require('express');
-var GeoIP2 = require('geoip2');
+var ip = require('ipv6');
+var MaxMind = require('maxmind-db-reader');
 var _ = require('lodash');
 
-var db = new GeoIP2('./GeoLite2-City.mmdb');
+var db = new MaxMind('./GeoLite2-City.mmdb');
 
 // Uses equirectangular approximation for speed
 function approximateDistance(lat1, lon1, lat2, lon2) {
@@ -70,13 +71,16 @@ app.get('/', function (req, res) {
   res.jsonp(resultFromAddress(req));
 });
 
-app.get('/favicon.ico', function (req, res) {
+app.get(/^\/(robots\.txt|favicon\.ico)$/, function (req, res) {
   res.send(404);
 });
 
 app.get('/:address', function (req, res) {
-  if (!req.param('address')) {
-    return res.send(500);
+  var v4 = new ip.v4.Address(req.param('address'));
+  var v6 = new ip.v6.Address(req.param('address'));
+
+  if (!v4.isValid() && !v6.isValid()) {
+    return res.jsonp(500, { error: 'Invalid IP Address' });
   }
 
   res.jsonp(resultFromAddress(req, req.param('address')));
