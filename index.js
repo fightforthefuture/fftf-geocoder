@@ -68,6 +68,7 @@ var app = express();
 app.enable('trust proxy');
 
 app.get('/', function (req, res) {
+  res.set('Access-Control-Allow-Origin', '*')
   res.jsonp(resultFromAddress(req));
 });
 
@@ -76,6 +77,7 @@ app.get(/^\/(robots\.txt|favicon\.ico)$/, function (req, res) {
 });
 
 app.get('/:address', function (req, res) {
+  res.set('Access-Control-Allow-Origin', '*')
   var v4 = new ip.v4.Address(req.param('address'));
   var v6 = new ip.v6.Address(req.param('address'));
 
