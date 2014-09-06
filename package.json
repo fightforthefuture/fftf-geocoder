@@ -12,7 +12,6 @@
     "node": "0.10.x"
   },
   "dependencies": {
-    "cluster": "^0.7.7",
     "express": "~3.4.8",
     "ipv6": "~3.1.1",
     "lodash": "~2.4.1",
