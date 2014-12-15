@@ -48,6 +48,7 @@ function resultFromAddress(req, opt_address) {
   } else {
     result.country = geoData.country;
     result.location = geoData.location;
+    result.allData = geoData;
   }
 
   if (req.param('lat') && req.param('lon') && req.param('distance')) {
