@@ -78,10 +78,6 @@ app.get(/^\/(robots\.txt|favicon\.ico)$/, function (req, res) {
   res.send(404);
 });
 
-app.get('/loaderio-cb515bc8d0eea6a61a066bbe1c4f6bbf', function(req, res) {
-  res.send('loaderio-cb515bc8d0eea6a61a066bbe1c4f6bbf');
-});
-
 app.get('/:address', function (req, res) {
   res.set('Access-Control-Allow-Origin', '*')
   var v4 = new ip.v4.Address(req.param('address'));
@@ -94,4 +90,4 @@ app.get('/:address', function (req, res) {
   res.jsonp(resultFromAddress(req, req.param('address')));
 });
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 5000);
